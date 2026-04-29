@@ -6,16 +6,16 @@ export default function R4LLogo({ size = 56 }: R4LLogoProps) {
   return (
     <div
       style={{ width: size, height: size }}
-      className="rounded-full bg-white flex items-center justify-center flex-shrink-0"
+      className="flex-shrink-0 overflow-hidden rounded-[18%]"
     >
-      <div
-        className="text-center leading-tight"
-        style={{ fontSize: size * 0.14 }}
-      >
-        <div className="font-sans font-bold text-r4l-red tracking-wider">REACH</div>
-        <div className="font-sans font-bold text-r4l-red">4+</div>
-        <div className="font-sans font-bold text-r4l-red tracking-wider">LIFE</div>
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/brand/logo.svg"
+        alt="Reach4Life"
+        width={size}
+        height={size}
+        className="block w-full h-full"
+      />
     </div>
   );
 }

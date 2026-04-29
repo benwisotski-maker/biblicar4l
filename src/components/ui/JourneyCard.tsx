@@ -1,13 +1,5 @@
 import { Journey } from "@/lib/journeyData";
 
-const ICONS: Record<string, string> = {
-  mirror: "🪞",
-  pair: "🤝",
-  group: "👥",
-  eye: "👁",
-  book: "📖",
-};
-
 export default function JourneyCard({ journey }: { journey: Journey }) {
   return (
     <div
@@ -15,10 +7,17 @@ export default function JourneyCard({ journey }: { journey: Journey }) {
       style={{ borderLeft: `4px solid ${journey.accent}` }}
     >
       <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-2xl"
+        className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5"
         style={{ background: journey.bgOpacity }}
       >
-        {ICONS[journey.icon] ?? "•"}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`/brand/${journey.id}.svg`}
+          alt=""
+          aria-hidden="true"
+          className="w-16 h-16"
+          loading="lazy"
+        />
       </div>
       <div className="mb-3">
         <span

@@ -7,6 +7,13 @@ interface Shot {
   caption: string;
 }
 
+interface Portrait {
+  src: string;
+  alt: string;
+  caption: string;
+  byline: string;
+}
+
 interface Beat {
   id: string;
   label: string;
@@ -15,6 +22,7 @@ interface Beat {
   body: string;
   shots: Shot[];
   background: string;
+  portrait?: Portrait;
 }
 
 const beats: Beat[] = [
@@ -44,6 +52,12 @@ const beats: Beat[] = [
       { src: "/screenshots/16-51-10.png", alt: "Identity in Christ Part 1 Complete with Sabrina", caption: "After Part 1 — a word from Sabrina" },
     ],
     background: "#0d0d18",
+    portrait: {
+      src: "/images/sabrina.jpg",
+      alt: "Portrait of Sabrina, the in-app guide",
+      caption: "Meet Sabrina",
+      byline: "She's not a chatbot. She's a real voice — recording short videos and writing the words that show up after every phase. The user gets to know her over time.",
+    },
   },
   {
     id: "journeys-tour",
@@ -182,32 +196,91 @@ function BeatRow({ beat, index }: { beat: Beat; index: number }) {
         }}
       />
       <div className="relative max-w-[1200px] mx-auto">
-        <RevealOnScroll>
-          <div className="flex items-center gap-3 mb-5">
-            <span
-              className="block w-8 h-px"
-              style={{ background: beat.labelColor, opacity: 0.6 }}
-            />
-            <p
-              className="font-sans font-bold text-[11px] uppercase"
-              style={{ letterSpacing: "0.18em", color: beat.labelColor }}
-            >
-              {beat.label}
-            </p>
+        {beat.portrait ? (
+          <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-10 md:gap-14 items-start mb-14">
+            <RevealOnScroll>
+              <div className="relative">
+                <div
+                  aria-hidden
+                  className="absolute -inset-4 rounded-3xl"
+                  style={{ background: `${beat.labelColor}14`, filter: "blur(20px)" }}
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={beat.portrait.src}
+                  alt={beat.portrait.alt}
+                  className="relative w-full max-w-[280px] aspect-square object-cover rounded-2xl border border-white/10 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.7)]"
+                  loading="lazy"
+                />
+                <p
+                  className="relative font-sans text-[11px] uppercase mt-3"
+                  style={{ letterSpacing: "0.18em", color: beat.labelColor }}
+                >
+                  {beat.portrait.caption}
+                </p>
+              </div>
+            </RevealOnScroll>
+            <RevealOnScroll delay={120}>
+              <div className="flex items-center gap-3 mb-5">
+                <span
+                  className="block w-8 h-px"
+                  style={{ background: beat.labelColor, opacity: 0.6 }}
+                />
+                <p
+                  className="font-sans font-bold text-[11px] uppercase"
+                  style={{ letterSpacing: "0.18em", color: beat.labelColor }}
+                >
+                  {beat.label}
+                </p>
+              </div>
+              <h2
+                className="font-serif font-bold text-white mb-5"
+                style={{ fontSize: "clamp(26px, 3.5vw, 38px)", lineHeight: 1.18 }}
+              >
+                {beat.heading}
+              </h2>
+              <p
+                className="font-sans text-white/65 mb-5"
+                style={{ fontSize: "16px", lineHeight: 1.75 }}
+              >
+                {beat.body}
+              </p>
+              <p
+                className="font-sans text-white/55 italic"
+                style={{ fontSize: "15px", lineHeight: 1.75 }}
+              >
+                {beat.portrait.byline}
+              </p>
+            </RevealOnScroll>
           </div>
-          <h2
-            className="font-serif font-bold text-white mb-5 max-w-3xl"
-            style={{ fontSize: "clamp(26px, 3.5vw, 38px)", lineHeight: 1.18 }}
-          >
-            {beat.heading}
-          </h2>
-          <p
-            className="font-sans text-white/65 mb-14 max-w-2xl"
-            style={{ fontSize: "16px", lineHeight: 1.75 }}
-          >
-            {beat.body}
-          </p>
-        </RevealOnScroll>
+        ) : (
+          <RevealOnScroll>
+            <div className="flex items-center gap-3 mb-5">
+              <span
+                className="block w-8 h-px"
+                style={{ background: beat.labelColor, opacity: 0.6 }}
+              />
+              <p
+                className="font-sans font-bold text-[11px] uppercase"
+                style={{ letterSpacing: "0.18em", color: beat.labelColor }}
+              >
+                {beat.label}
+              </p>
+            </div>
+            <h2
+              className="font-serif font-bold text-white mb-5 max-w-3xl"
+              style={{ fontSize: "clamp(26px, 3.5vw, 38px)", lineHeight: 1.18 }}
+            >
+              {beat.heading}
+            </h2>
+            <p
+              className="font-sans text-white/65 mb-14 max-w-2xl"
+              style={{ fontSize: "16px", lineHeight: 1.75 }}
+            >
+              {beat.body}
+            </p>
+          </RevealOnScroll>
+        )}
 
         <PhoneRow beat={beat} />
 
