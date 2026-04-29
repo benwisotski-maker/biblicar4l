@@ -12,9 +12,8 @@ export default function PhoneFrame({
   return (
     <div
       style={{ width, height }}
-      className="relative rounded-[40px] border-2 border-[#2a2a3a] bg-r4l-surface overflow-hidden flex-shrink-0"
+      className="relative rounded-[44px] border border-white/10 bg-black overflow-hidden flex-shrink-0 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.55)]"
     >
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10" />
       {children}
     </div>
   );
