@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-r4l-red: #f22e2e;
+  --color-r4l-navy: #002b49;
+  --color-r4l-navy2: #001a2e;
+  --color-r4l-yellow: #ffb500;
+  --color-r4l-teal: #00a9ce;
+  --color-r4l-green: #00b388;
+  --color-r4l-purple: #575195;
+  --color-r4l-surface: #0d0d18;
+  --color-r4l-surface2: #080810;
+
+  --font-sans: "Noto Sans", system-ui, sans-serif;
+  --font-serif: "Noto Serif", Georgia, serif;
+
+  --animate-bounce-slow: bounce 2.5s infinite;
+  --animate-fade-up: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:root {
+  --r4l-red: #f22e2e;
+  --r4l-navy: #002b49;
+  --r4l-yellow: #ffb500;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Noto Sans", system-ui, sans-serif;
+  background: #080810;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: "Noto Serif", Georgia, serif;
+}
