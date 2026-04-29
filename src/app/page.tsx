@@ -2,7 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import Problem from "@/components/sections/Problem";
-import TheApp from "@/components/sections/TheApp";
+import AppTour from "@/components/sections/AppTour";
 import Journeys from "@/components/sections/Journeys";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Vision from "@/components/sections/Vision";
@@ -14,7 +14,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Problem />
-      <TheApp />
+      <AppTour />
       <Journeys />
       <HowItWorks />
       <Vision />
