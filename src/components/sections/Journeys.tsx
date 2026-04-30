@@ -94,35 +94,30 @@ export default function Journeys() {
             <FloatingElement
               key={slot.id}
               depth={slot.depth}
-              className=""
+              style={{ top: slot.top, left: slot.left }}
             >
-              <div
-                style={{ top: slot.top, left: slot.left }}
-                className="absolute"
-              >
-                <div className={`flex flex-col gap-2 ${labelClasses}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    data-floating-illus
-                    src={`/brand/${slot.id}.svg`}
-                    alt=""
-                    aria-hidden="true"
-                    style={{
-                      width: slot.size,
-                      height: slot.size,
-                      opacity: 0,
-                      filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.12))",
-                    }}
-                    className="transition-transform duration-300 hover:scale-110"
-                    draggable={false}
-                  />
-                  <p
-                    className="font-serif font-bold whitespace-nowrap"
-                    style={{ color: journey.accent, fontSize: 16 }}
-                  >
-                    {journey.name}
-                  </p>
-                </div>
+              <div className={`flex flex-col gap-2 ${labelClasses}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  data-floating-illus
+                  src={`/brand/${slot.id}.svg`}
+                  alt=""
+                  aria-hidden="true"
+                  style={{
+                    width: slot.size,
+                    height: slot.size,
+                    opacity: 0,
+                    filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.12))",
+                  }}
+                  className="transition-transform duration-300 hover:scale-110"
+                  draggable={false}
+                />
+                <p
+                  className="font-serif font-bold whitespace-nowrap"
+                  style={{ color: journey.accent, fontSize: 16 }}
+                >
+                  {journey.name}
+                </p>
               </div>
             </FloatingElement>
           );

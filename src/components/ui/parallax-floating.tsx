@@ -86,12 +86,14 @@ export default function Floating({
 interface FloatingElementProps {
   children: ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   depth?: number;
 }
 
 export function FloatingElement({
   children,
   className,
+  style,
   depth = 1,
 }: FloatingElementProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -105,7 +107,11 @@ export function FloatingElement({
   }, [ctx, id, depth]);
 
   return (
-    <div ref={ref} className={cn("absolute will-change-transform", className)}>
+    <div
+      ref={ref}
+      style={style}
+      className={cn("absolute will-change-transform", className)}
+    >
       {children}
     </div>
   );
