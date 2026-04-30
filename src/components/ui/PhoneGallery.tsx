@@ -17,31 +17,52 @@ interface PhoneGalleryProps {
 const PHONE_W = 220;
 const PHONE_H = 478;
 
-const SLOTS = [
-  { x: -360, y: 12, z: 50, dir: -1 as const },
-  { x: -180, y: 30, z: 40, dir: -1 as const },
-  { x: 0, y: 0, z: 30, dir: 1 as const },
-  { x: 180, y: 22, z: 20, dir: 1 as const },
-  { x: 360, y: 38, z: 10, dir: -1 as const },
-];
+type Slot = { x: number; y: number; z: number; dir: -1 | 1 };
+
+const SLOTS_BY_COUNT: Record<number, Slot[]> = {
+  3: [
+    { x: -280, y: 24, z: 30, dir: -1 },
+    { x: 0, y: 0, z: 50, dir: 1 },
+    { x: 280, y: 24, z: 20, dir: 1 },
+  ],
+  5: [
+    { x: -360, y: 12, z: 50, dir: -1 },
+    { x: -180, y: 30, z: 40, dir: -1 },
+    { x: 0, y: 0, z: 30, dir: 1 },
+    { x: 180, y: 22, z: 20, dir: 1 },
+    { x: 360, y: 38, z: 10, dir: -1 },
+  ],
+};
+
+function slotsFor(count: number): Slot[] {
+  if (SLOTS_BY_COUNT[count]) return SLOTS_BY_COUNT[count];
+  // Generic centered layout: even spacing, tiny y stagger.
+  const spacing = 200;
+  const half = (count - 1) / 2;
+  return Array.from({ length: count }, (_, i) => {
+    const offset = i - half;
+    return {
+      x: Math.round(offset * spacing),
+      y: Math.round(Math.abs(offset) * 14),
+      z: Math.round(50 - Math.abs(offset) * 10),
+      dir: (offset < 0 ? -1 : 1) as -1 | 1,
+    };
+  });
+}
 
 function randInRange(min: number, max: number) {
   return min + Math.random() * (max - min);
 }
 
 export default function PhoneGallery({ shots }: PhoneGalleryProps) {
+  const slots = slotsFor(shots.length);
   const [rotations, setRotations] = useState<number[]>(() =>
     Array.from({ length: shots.length }, () => 0)
   );
 
   useEffect(() => {
-    setRotations(
-      shots.map((_, i) => {
-        const slot = SLOTS[i];
-        if (!slot) return 0;
-        return randInRange(1, 4) * slot.dir;
-      })
-    );
+    setRotations(slots.map((slot) => randInRange(1, 4) * slot.dir));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shots]);
 
   return (
@@ -61,7 +82,7 @@ export default function PhoneGallery({ shots }: PhoneGalleryProps) {
           .map((shot, idx) => ({ shot, idx }))
           .reverse()
           .map(({ shot, idx }) => {
-            const slot = SLOTS[idx];
+            const slot = slots[idx];
             if (!slot) return null;
             const rot = rotations[idx] ?? 0;
             return (
