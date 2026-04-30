@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
+import { CinematicHero } from "@/components/ui/cinematic-hero";
 import Problem from "@/components/sections/Problem";
 import AppTour from "@/components/sections/AppTour";
 import Journeys from "@/components/sections/Journeys";
@@ -10,9 +10,9 @@ import CallToAction from "@/components/sections/CallToAction";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-r4l-surface2">
+    <main className="min-h-screen bg-r4l-surface2 overflow-x-hidden">
       <Navbar />
-      <Hero />
+      <CinematicHero />
       <Problem />
       <AppTour />
       <Journeys />

@@ -12,6 +12,10 @@
   --color-r4l-surface: #0d0d18;
   --color-r4l-surface2: #080810;
 
+  --color-background: #080810;
+  --color-foreground: #ffffff;
+  --color-muted-foreground: rgba(255, 255, 255, 0.6);
+
   --font-sans: "Noto Sans", system-ui, sans-serif;
   --font-serif: "Noto Serif", Georgia, serif;
 
