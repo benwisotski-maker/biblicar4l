@@ -1,5 +1,8 @@
 import PhoneScreenshot from "@/components/ui/PhoneScreenshot";
+import PhoneGallery from "@/components/ui/PhoneGallery";
 import RevealOnScroll from "@/components/ui/RevealOnScroll";
+
+const GALLERY_BEAT_IDS = new Set(["onboarding", "circle"]);
 
 interface Shot {
   src: string;
@@ -155,9 +158,17 @@ function PhoneRow({ beat }: { beat: Beat }) {
     );
   }
 
+  const useGallery = GALLERY_BEAT_IDS.has(beat.id);
+
   return (
-    <div className="no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory">
-      <div className="flex flex-row gap-5 md:gap-6 md:justify-center min-w-max">
+    <>
+      {useGallery ? <PhoneGallery shots={beat.shots} /> : null}
+      <div
+        className={`no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory ${
+          useGallery ? "lg:hidden" : ""
+        }`}
+      >
+        <div className="flex flex-row gap-5 md:gap-6 md:justify-center min-w-max">
         {beat.shots.map((shot, idx) => (
           <RevealOnScroll
             key={`${beat.id}-${idx}`}
@@ -175,8 +186,9 @@ function PhoneRow({ beat }: { beat: Beat }) {
             </div>
           </RevealOnScroll>
         ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
