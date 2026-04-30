@@ -20,6 +20,10 @@ const PHONE_H = 478;
 type Slot = { x: number; y: number; z: number; dir: -1 | 1 };
 
 const SLOTS_BY_COUNT: Record<number, Slot[]> = {
+  2: [
+    { x: -180, y: 18, z: 50, dir: -1 },
+    { x: 180, y: 18, z: 40, dir: 1 },
+  ],
   3: [
     { x: -280, y: 24, z: 30, dir: -1 },
     { x: 0, y: 0, z: 50, dir: 1 },

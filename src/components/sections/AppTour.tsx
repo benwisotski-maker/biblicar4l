@@ -2,7 +2,13 @@ import PhoneScreenshot from "@/components/ui/PhoneScreenshot";
 import PhoneGallery from "@/components/ui/PhoneGallery";
 import RevealOnScroll from "@/components/ui/RevealOnScroll";
 
-const GALLERY_BEAT_IDS = new Set(["onboarding", "circle"]);
+const GALLERY_BEAT_IDS = new Set([
+  "onboarding",
+  "sabrina",
+  "journeys-tour",
+  "circle",
+  "bible",
+]);
 
 interface Shot {
   src: string;
@@ -90,12 +96,13 @@ const beats: Beat[] = [
   },
   {
     id: "bible",
-    label: "05 — THE BIBLE, IN THEIR LANGUAGE",
+    label: "05 — THE BIBLE & JOURNAL",
     labelColor: "#ffb500",
-    heading: "Every translation. Every language. Right inside the app.",
-    body: "Read the full New Testament. Highlight a verse. Add it to a journal. Share it with the Circle. And because Biblica is hosting Reach4Life, every user reaches into the largest open library of Bible translations on Earth — over 150 languages — without ever leaving the app.",
+    heading: "Every translation. Every language. A journal that grows with them.",
+    body: "Read the full New Testament. Tap a verse to highlight, copy, or add it straight to a journal entry. Toggle Share with Circle and the entry shows up in the group's tab. Because Biblica is hosting Reach4Life, every user reaches into the largest open library of Bible translations on Earth — over 150 languages — without ever leaving the app.",
     shots: [
       { src: "/screenshots/16-56-47.png", alt: "Bible reading screen showing John 3 with Highlight, Add to journal, Copy actions", caption: "Tap a verse · highlight, save, share" },
+      { src: "/screenshots/09-53-23.png", alt: "Edit your note journal screen with the text 'Who am I?' and a Share with circle toggle enabled", caption: "Journal · share with the Circle, by choice" },
     ],
     background: "#080810",
   },
@@ -119,10 +126,12 @@ const PHONE_H_HERO = 608;
 
 function PhoneRow({ beat }: { beat: Beat }) {
   const count = beat.shots.length;
+  const useGallery = GALLERY_BEAT_IDS.has(beat.id) && count >= 2;
 
+  let fallback: React.ReactNode;
   if (count === 1) {
     const shot = beat.shots[0];
-    return (
+    fallback = (
       <div className="flex justify-center">
         <RevealOnScroll>
           <PhoneScreenshot
@@ -135,10 +144,8 @@ function PhoneRow({ beat }: { beat: Beat }) {
         </RevealOnScroll>
       </div>
     );
-  }
-
-  if (count === 2) {
-    return (
+  } else if (count === 2) {
+    fallback = (
       <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 justify-center items-center">
         {beat.shots.map((shot, idx) => (
           <RevealOnScroll key={`${beat.id}-${idx}`} delay={idx * 100}>
@@ -155,38 +162,38 @@ function PhoneRow({ beat }: { beat: Beat }) {
         ))}
       </div>
     );
+  } else {
+    fallback = (
+      <div className="no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory">
+        <div className="flex flex-row gap-5 md:gap-6 md:justify-center min-w-max">
+          {beat.shots.map((shot, idx) => (
+            <RevealOnScroll
+              key={`${beat.id}-${idx}`}
+              delay={idx * 80}
+              className="snap-center flex-shrink-0"
+            >
+              <div style={{ transform: idx % 2 === 1 ? "translateY(16px)" : undefined }}>
+                <PhoneScreenshot
+                  src={shot.src}
+                  alt={shot.alt}
+                  caption={shot.caption}
+                  width={PHONE_W_DESKTOP}
+                  height={PHONE_H_DESKTOP}
+                />
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
+      </div>
+    );
   }
 
-  const useGallery = GALLERY_BEAT_IDS.has(beat.id);
+  if (!useGallery) return <>{fallback}</>;
 
   return (
     <>
-      {useGallery ? <PhoneGallery shots={beat.shots} /> : null}
-      <div
-        className={`no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory ${
-          useGallery ? "lg:hidden" : ""
-        }`}
-      >
-        <div className="flex flex-row gap-5 md:gap-6 md:justify-center min-w-max">
-        {beat.shots.map((shot, idx) => (
-          <RevealOnScroll
-            key={`${beat.id}-${idx}`}
-            delay={idx * 80}
-            className="snap-center flex-shrink-0"
-          >
-            <div style={{ transform: idx % 2 === 1 ? "translateY(16px)" : undefined }}>
-              <PhoneScreenshot
-                src={shot.src}
-                alt={shot.alt}
-                caption={shot.caption}
-                width={PHONE_W_DESKTOP}
-                height={PHONE_H_DESKTOP}
-              />
-            </div>
-          </RevealOnScroll>
-        ))}
-        </div>
-      </div>
+      <PhoneGallery shots={beat.shots} />
+      <div className="lg:hidden">{fallback}</div>
     </>
   );
 }
