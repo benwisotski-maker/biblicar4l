@@ -10,7 +10,6 @@ import {
   Map,
   Sparkles,
   Heart,
-  MessageSquare,
   type LucideIcon,
 } from "lucide-react";
 
@@ -29,7 +28,6 @@ const items: DockItem[] = [
   { icon: Map, label: "The Journeys", href: "#journeys" },
   { icon: Sparkles, label: "How It Works", href: "#how" },
   { icon: Heart, label: "The Vision", href: "#vision" },
-  { icon: MessageSquare, label: "Talk to Biblica", href: "#cta" },
 ];
 
 export default function GooeyDock() {
